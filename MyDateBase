@@ -1,10 +1,7 @@
--- Створення бази даних
 CREATE DATABASE IF NOT EXISTS transport_management;
 
--- Використання бази даних
 USE transport_management;
 
--- Таблиця клієнтів
 CREATE TABLE IF NOT EXISTS clients (
     client_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -12,7 +9,6 @@ CREATE TABLE IF NOT EXISTS clients (
     phone VARCHAR(15) NOT NULL
 );
 
--- Таблиця транспортних засобів
 CREATE TABLE IF NOT EXISTS vehicles (
     vehicle_id INT AUTO_INCREMENT PRIMARY KEY,
     vehicle_number VARCHAR(20) NOT NULL,
@@ -20,7 +16,6 @@ CREATE TABLE IF NOT EXISTS vehicles (
     capacity INT NOT NULL
 );
 
--- Таблиця водіїв
 CREATE TABLE IF NOT EXISTS drivers (
     driver_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -30,7 +25,6 @@ CREATE TABLE IF NOT EXISTS drivers (
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id) ON DELETE SET NULL
 );
 
--- Таблиця маршрутів
 CREATE TABLE IF NOT EXISTS routes (
     route_id INT AUTO_INCREMENT PRIMARY KEY,
     start_location VARCHAR(100) NOT NULL,
@@ -38,7 +32,6 @@ CREATE TABLE IF NOT EXISTS routes (
     distance DECIMAL(10, 2) NOT NULL
 );
 
--- Таблиця замовлень
 CREATE TABLE IF NOT EXISTS orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     client_id INT,
@@ -51,7 +44,6 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (route_id) REFERENCES routes(route_id) ON DELETE SET NULL
 );
 
--- Таблиця статусу транспортного засобу
 CREATE TABLE IF NOT EXISTS vehicle_status (
     vehicle_status_id INT AUTO_INCREMENT PRIMARY KEY,
     vehicle_id INT,
@@ -60,7 +52,6 @@ CREATE TABLE IF NOT EXISTS vehicle_status (
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id) ON DELETE CASCADE
 );
 
--- Вставка даних у таблицю клієнтів
 INSERT INTO clients (name, email, phone) VALUES
 ('Тополюк Іван', 'ivan@example.com', '+380501234567'),
 ('Ткачук Сергій', 'sergo@example.com', '+380501234568'),
@@ -71,7 +62,6 @@ INSERT INTO clients (name, email, phone) VALUES
 ('Бугайчук Олександер', 'sasha@example.com', '+380501234570'),
 ('Сущук Максим', 'maxum@example.com', '+380501234571');
 
--- Вставка даних у таблицю транспортних засобів
 INSERT INTO vehicles (vehicle_number, type, capacity) VALUES
 ('AA1234BB', 'Вантажівка', 2000),
 ('BB2345CC', 'Автобус', 50),
@@ -82,7 +72,6 @@ INSERT INTO vehicles (vehicle_number, type, capacity) VALUES
 ('DI4567EE', 'Напівпричіп', 3000),
 ('EU5678FF', 'Мікроавтобус', 15);
 
--- Вставка даних у таблицю водіїв
 INSERT INTO drivers (name, license_number, phone, vehicle_id) VALUES
 ('Грицеляк Василь', 'AB123456', '+380501234580', 1),
 ('Усик Олександер', 'CD654321', '+380501234581', 2),
@@ -93,7 +82,6 @@ INSERT INTO drivers (name, license_number, phone, vehicle_id) VALUES
 ('Нікітчук Андрій ', 'MN998877', '+380501234586', 7),
 ('Бойчук Михайло', 'OP112233', '+380501234587', 8);
 
--- Вставка даних у таблицю маршрутів
 INSERT INTO routes (start_location, end_location, distance) VALUES
 ('Київ', 'Львів', 540.50),
 ('Одеса', 'Харків', 650.75),
@@ -104,7 +92,6 @@ INSERT INTO routes (start_location, end_location, distance) VALUES
 ('Чернівці', 'Закарпаття', 250.25),
 ('Миколаїв', 'Київ', 320.40);
 
--- Вставка даних у таблицю замовлень
 INSERT INTO orders (client_id, vehicle_id, route_id, status) VALUES
 (1, 1, 1, 'Pending'),
 (2, 2, 2, 'In Progress'),
@@ -115,7 +102,6 @@ INSERT INTO orders (client_id, vehicle_id, route_id, status) VALUES
 (2, 3, 2, 'Pending'),
 (3, 4, 3, 'In Progress');
 
--- Вставка даних у таблицю статусів транспортних засобів
 INSERT INTO vehicle_status (vehicle_id, status) VALUES
 (1, 'Available'),
 (2, 'In Use'),
@@ -126,7 +112,6 @@ INSERT INTO vehicle_status (vehicle_id, status) VALUES
 (7, 'In Use'),
 (8, 'Available');
 
--- Перевірка даних (опційно)
 SELECT * FROM clients;
 SELECT * FROM vehicles;
 SELECT * FROM routes;
